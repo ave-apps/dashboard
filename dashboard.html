@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mijn Claude Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --border: #e2ddd6;
+    --text: #1a1916;
+    --muted: #7a7670;
+    --accent: #2a5298;
+    --accent-light: #e8eef8;
+    --accent-hover: #1e3d72;
+    --check: #1D9E75;
+    --tag-mail: #e8eef8;
+    --tag-mail-text: #1e3d72;
+    --tag-alert: #fef3e2;
+    --tag-alert-text: #854f0b;
+    --tag-agenda: #e8f5ee;
+    --tag-agenda-text: #0f6e56;
+    --tag-analyse: #f3e8f8;
+    --tag-analyse-text: #6b3a8a;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    user-select: none;
+  }
+
+  .item:hover {
+    border-color: #bbb8b0;
+  }
+
+  .item.checked {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .item.checked .checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .checkmark {
+    width: 10px;
+    height: 10px;
+    display: none;
+  }
+
+  .item.checked .checkmark {
+    display: block;
+  }
+
+  .item-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .item-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .item.checked .item-label {
+    color: var(--accent);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .tag-mail  { background: var(--tag-mail);   color: var(--tag-mail-text); }
+  .tag-alert { background: var(--tag-alert);  color: var(--tag-alert-text); }
+  .tag-agenda{ background: var(--tag-agenda); color: var(--tag-agenda-text); }
+  .tag-analyse { background: var(--tag-analyse); color: var(--tag-analyse-text); }
+
+  .actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .btn-go {
+    flex: 1;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-go:hover { background: var(--accent-hover); }
+  .btn-go:active { transform: scale(0.98); }
+
+  .btn-go:disabled {
+    background: #c5c0b8;
+    cursor: not-allowed;
+  }
+
+  .btn-reset {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-reset:hover { border-color: #aaa; color: var(--text); }
+
+  .counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    text-align: right;
+  }
+
+  .counter span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media (max-width: 400px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">Claude · Persoonlijk dashboard</div>
+    <h1>Goedemorgen, <span>Albert</span></h1>
+    <p class="subtitle">Kies wat je wilt zien en open Claude.</p>
+  </header>
+
+  <div class="section-label">E-mail &amp; inbox</div>
+  <div class="grid" id="grid-mail">
+    <div class="item" data-prompt="inbox overzicht vandaag" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Inbox overzicht vandaag</div><span class="tag tag-mail">mail</span></div>
+    </div>
+    <div class="item" data-prompt="ongelezen mails" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Ongelezen mails</div><span class="tag tag-mail">mail</span></div>
+    </div>
+    <div class="item" data-prompt="mails die actie vragen" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Mails die actie vragen</div><span class="tag tag-mail">mail</span></div>
+    </div>
+    <div class="item" data-prompt="mail van en aan Rachel Jansen" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Mail Rachel Jansen</div><span class="tag tag-mail">mail</span></div>
+    </div>
+    <div class="item" data-prompt="Mailsuite overzicht wie las wat" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Mailsuite — wie las wat</div><span class="tag tag-mail">mail</span></div>
+    </div>
+    <div class="item" data-prompt="samenvatting nieuwsbrieven" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Nieuwsbrieven samenvatting</div><span class="tag tag-mail">mail</span></div>
+    </div>
+  </div>
+
+  <div class="section-label">Alerts &amp; nieuws</div>
+  <div class="grid">
+    <div class="item" data-prompt="epilepsie-alerts overzicht" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Epilepsie-alerts</div><span class="tag tag-alert">alert</span></div>
+    </div>
+    <div class="item" data-prompt="medicijntekort-alerts overzicht" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Medicijntekort-alerts</div><span class="tag tag-alert">alert</span></div>
+    </div>
+  </div>
+
+  <div class="section-label">Agenda &amp; analyse</div>
+  <div class="grid">
+    <div class="item" data-prompt="agenda vandaag en deze week" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Agenda vandaag / week</div><span class="tag tag-agenda">agenda</span></div>
+    </div>
+    <div class="item" data-prompt="e-mailactiviteit tijdlijn toon me een grafisch overzicht" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">E-mailactiviteit tijdlijn</div><span class="tag tag-analyse">analyse</span></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-go" id="btn-go" onclick="openClaude()" disabled>
+      Open in Claude
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn-reset" onclick="resetAll()">Wis alles</button>
+  </div>
+  <div class="counter" id="counter">0 onderdelen geselecteerd</div>
+
+  <footer>
+    <span>ave-apps · dashboard</span>
+    <span id="datum"></span>
+  </footer>
+
+</div>
+
+<script>
+const selected = new Set();
+
+function toggle(el) {
+  const prompt = el.dataset.prompt;
+  if (selected.has(prompt)) {
+    selected.delete(prompt);
+    el.classList.remove('checked');
+  } else {
+    selected.add(prompt);
+    el.classList.add('checked');
+  }
+  updateUI();
+}
+
+function updateUI() {
+  const n = selected.size;
+  document.getElementById('counter').innerHTML = n === 0
+    ? '0 onderdelen geselecteerd'
+    : '<span>' + n + '</span> onderdeel' + (n === 1 ? '' : 'en') + ' geselecteerd';
+  document.getElementById('btn-go').disabled = n === 0;
+}
+
+function resetAll() {
+  selected.clear();
+  document.querySelectorAll('.item.checked').forEach(el => el.classList.remove('checked'));
+  updateUI();
+}
+
+function openClaude() {
+  if (selected.size === 0) return;
+  const delen = Array.from(selected);
+  const vraag = 'Geef me een overzicht van: ' + delen.join(', ') + '.';
+  const url = 'https://claude.ai/new?q=' + encodeURIComponent(vraag);
+  window.open(url, '_blank');
+}
+
+const dagen = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+const maanden = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+const nu = new Date();
+document.getElementById('datum').textContent =
+  dagen[nu.getDay()] + ' ' + nu.getDate() + ' ' + maanden[nu.getMonth()];
+</script>
+</body>
+</html>
