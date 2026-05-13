@@ -26,6 +26,10 @@
     --tag-agenda-text: #0f6e56;
     --tag-analyse: #f3e8f8;
     --tag-analyse-text: #6b3a8a;
+    --tag-ai: #e8f4f8;
+    --tag-ai-text: #0c5a7a;
+    --tag-linkedin: #e8edf5;
+    --tag-linkedin-text: #1a3a6e;
   }
 
   body {
@@ -169,6 +173,8 @@
   .tag-alert { background: var(--tag-alert);  color: var(--tag-alert-text); }
   .tag-agenda{ background: var(--tag-agenda); color: var(--tag-agenda-text); }
   .tag-analyse { background: var(--tag-analyse); color: var(--tag-analyse-text); }
+  .tag-ai { background: var(--tag-ai); color: var(--tag-ai-text); }
+  .tag-linkedin { background: var(--tag-linkedin); color: var(--tag-linkedin-text); }
 
   .actions {
     margin-top: 1.5rem;
@@ -271,14 +277,6 @@
       <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="item-body"><div class="item-label">Mails die actie vragen</div><span class="tag tag-mail">mail</span></div>
     </div>
-    <div class="item" data-prompt="mail van en aan Rachel Jansen" onclick="toggle(this)">
-      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="item-body"><div class="item-label">Mail Rachel Jansen</div><span class="tag tag-mail">mail</span></div>
-    </div>
-    <div class="item" data-prompt="Mailsuite overzicht wie las wat" onclick="toggle(this)">
-      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="item-body"><div class="item-label">Mailsuite — wie las wat</div><span class="tag tag-mail">mail</span></div>
-    </div>
     <div class="item" data-prompt="samenvatting nieuwsbrieven" onclick="toggle(this)">
       <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="item-body"><div class="item-label">Nieuwsbrieven samenvatting</div><span class="tag tag-mail">mail</span></div>
@@ -294,6 +292,46 @@
     <div class="item" data-prompt="medicijntekort-alerts overzicht" onclick="toggle(this)">
       <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="item-body"><div class="item-label">Medicijntekort-alerts</div><span class="tag tag-alert">alert</span></div>
+    </div>
+  </div>
+
+  <div class="section-label">AI-gerelateerd</div>
+  <div class="grid">
+    <div class="item" data-prompt="laatste nieuws en ontwikkelingen rond AI deze week" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">AI-nieuws deze week</div><span class="tag tag-ai">ai</span></div>
+    </div>
+    <div class="item" data-prompt="nieuws en updates van Anthropic en Claude" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Anthropic / Claude updates</div><span class="tag tag-ai">ai</span></div>
+    </div>
+    <div class="item" data-prompt="AI in de zorg actuele ontwikkelingen en publicaties" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">AI in de zorg</div><span class="tag tag-ai">ai</span></div>
+    </div>
+    <div class="item" data-prompt="ave-apps ideeen en doorontwikkelingen brainstorm" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">ave-apps doordenken</div><span class="tag tag-ai">ai</span></div>
+    </div>
+  </div>
+
+  <div class="section-label">LinkedIn</div>
+  <div class="grid">
+    <div class="item" data-prompt="LinkedIn berichten en meldingen overzicht" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Berichten &amp; meldingen</div><span class="tag tag-linkedin">linkedin</span></div>
+    </div>
+    <div class="item" data-prompt="LinkedIn nieuwe connectieverzoeken bekijken" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Connectieverzoeken</div><span class="tag tag-linkedin">linkedin</span></div>
+    </div>
+    <div class="item" data-prompt="LinkedIn ideeen voor een nieuwe post passend bij mijn profiel" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Post-ideeen</div><span class="tag tag-linkedin">linkedin</span></div>
+    </div>
+    <div class="item" data-prompt="LinkedIn relevante posts uit mijn netwerk samenvatten" onclick="toggle(this)">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="item-body"><div class="item-label">Netwerk-posts</div><span class="tag tag-linkedin">linkedin</span></div>
     </div>
   </div>
 
